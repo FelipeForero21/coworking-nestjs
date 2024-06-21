@@ -3,7 +3,6 @@ import { Sesion } from "src/sesiones/entities/sesione.entity";
 import { Usuario } from "src/usuarios/entities/usuario.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
-
 @Entity({ schema: 'public', name: "reservas_de_espacios_de_trabajo" })
 export class ReservaDeEspacio {
     @PrimaryGeneratedColumn()

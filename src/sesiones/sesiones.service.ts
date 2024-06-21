@@ -13,29 +13,50 @@ export class SesionesService {
   async findAll(): Promise<Sesion[]> {
     return this.sesionRepository.find();
   }
-
   async findMostOccupied(): Promise<Sesion[]> {
-    return this.sesionRepository.createQueryBuilder('sesion')
-      .leftJoinAndSelect('sesion.espacio', 'espacio')
-      .leftJoinAndSelect('sesion.usuario', 'usuario')
-      .orderBy('COUNT(usuario.id)', 'DESC')
-      .groupBy('sesion.id')
+    return this.sesionRepository
+      .createQueryBuilder('sesion')
+      .select([
+        'sesion.id',
+        'sesion.hora_inicio',
+        'sesion.hora_fin',
+        'reserva.fecha_reserva',
+        'espacio.id as espacio_id',
+        'usuario.id as usuario_id',
+        'COUNT(usuario.id) as count'
+      ])
+      .leftJoin('sesion.reserva', 'reserva')
+      .leftJoin('sesion.espacio', 'espacio')
+      .leftJoin('sesion.usuario', 'usuario')
+      .groupBy('sesion.id, reserva.id, espacio.id, usuario.id')
+      .orderBy('count', 'DESC')
       .getMany();
   }
-
+  
   async findMostAvailable(): Promise<Sesion[]> {
-    return this.sesionRepository.createQueryBuilder('sesion')
-      .leftJoinAndSelect('sesion.espacio', 'espacio')
-      .leftJoinAndSelect('sesion.usuario', 'usuario')
-      .orderBy('COUNT(usuario.id)', 'ASC')
-      .groupBy('sesion.id')
+    return this.sesionRepository
+      .createQueryBuilder('sesion')
+      .select([
+        'sesion.id',
+        'sesion.hora_inicio',
+        'sesion.hora_fin',
+        'espacio.id as espacio_id',
+        'usuario.id as usuario_id',
+        'COUNT(usuario.id) as count'
+      ])
+      .leftJoin('sesion.espacio', 'espacio')
+      .leftJoin('sesion.usuario', 'usuario')
+      .groupBy('sesion.id, espacio.id, usuario.id')
+      .orderBy('count', 'ASC')
       .getMany();
   }
-
+  
   async findAssignedEspacios(sesionId: number): Promise<Sesion> {
     return this.sesionRepository.findOne({
       where: { id: sesionId },
       relations: ['espacio', 'usuario'],
     });
   }
+
+  
 }
