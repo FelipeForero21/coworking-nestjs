@@ -1,26 +1,36 @@
 import { Injectable } from '@nestjs/common';
-import { CreateEspaciosDeTrabajoDto } from './dto/create-espacios_de_trabajo.dto';
-import { UpdateEspaciosDeTrabajoDto } from './dto/update-espacios_de_trabajo.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Not, Repository } from 'typeorm';
+import { Espacio } from './entities/espacios_de_trabajo.entity';
 
 @Injectable()
 export class EspaciosDeTrabajoService {
-  create(createEspaciosDeTrabajoDto: CreateEspaciosDeTrabajoDto) {
-    return 'This action adds a new espaciosDeTrabajo';
+  constructor(
+    @InjectRepository(Espacio)
+    private readonly espacioRepository: Repository<Espacio>,
+  ) {}
+
+  async findAll(): Promise<Espacio[]> {
+    return this.espacioRepository.find();
   }
 
-  findAll() {
-    return `This action returns all espaciosDeTrabajo`;
+  async findAvailableBySalaAndSesion(salaId: number, sesionId: number): Promise<Espacio[]> {
+    return this.espacioRepository.createQueryBuilder('espacio')
+      .leftJoinAndSelect('espacio.sesiones', 'sesion')
+      .where('espacio.sala = :salaId', { salaId })
+      .andWhere('espacio.disponible = true')
+      .andWhere('sesion.id = :sesionId', { sesionId })
+      .andWhere('sesion.usuario IS NULL')
+      .getMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} espaciosDeTrabajo`;
-  }
-
-  update(id: number, updateEspaciosDeTrabajoDto: UpdateEspaciosDeTrabajoDto) {
-    return `This action updates a #${id} espaciosDeTrabajo`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} espaciosDeTrabajo`;
+  async findOccupiedBySalaAndSesion(salaId: number, sesionId: number): Promise<Espacio[]> {
+    return this.espacioRepository.createQueryBuilder('espacio')
+      .leftJoinAndSelect('espacio.sesiones', 'sesion')
+      .where('espacio.sala = :salaId', { salaId })
+      .andWhere('espacio.disponible = false')
+      .andWhere('sesion.id = :sesionId', { sesionId })
+      .andWhere('sesion.usuario IS NOT NULL')
+      .getMany();
   }
 }

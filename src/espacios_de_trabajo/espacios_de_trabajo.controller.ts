@@ -1,34 +1,24 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { EspaciosDeTrabajoService } from './espacios_de_trabajo.service';
-import { CreateEspaciosDeTrabajoDto } from './dto/create-espacios_de_trabajo.dto';
-import { UpdateEspaciosDeTrabajoDto } from './dto/update-espacios_de_trabajo.dto';
+import { Espacio } from './entities/espacios_de_trabajo.entity';
 
-@Controller('espacios-de-trabajo')
+@Controller('espacios')
 export class EspaciosDeTrabajoController {
   constructor(private readonly espaciosDeTrabajoService: EspaciosDeTrabajoService) {}
 
-  @Post()
-  create(@Body() createEspaciosDeTrabajoDto: CreateEspaciosDeTrabajoDto) {
-    return this.espaciosDeTrabajoService.create(createEspaciosDeTrabajoDto);
-  }
-
   @Get()
-  findAll() {
+  findAll(): Promise<Espacio[]> {
     return this.espaciosDeTrabajoService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.espaciosDeTrabajoService.findOne(+id);
+  @Get('disponibles/:salaId/:sesionId')
+  findAvailable(@Param('salaId') salaId: number, @Param('sesionId') sesionId: number): Promise<Espacio[]> {
+    return this.espaciosDeTrabajoService.findAvailableBySalaAndSesion(salaId, sesionId);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEspaciosDeTrabajoDto: UpdateEspaciosDeTrabajoDto) {
-    return this.espaciosDeTrabajoService.update(+id, updateEspaciosDeTrabajoDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.espaciosDeTrabajoService.remove(+id);
+  @Get('ocupados/:salaId/:sesionId')
+  findOccupied(@Param('salaId') salaId: number, @Param('sesionId') sesionId: number): Promise<Espacio[]> {
+    return this.espaciosDeTrabajoService.findOccupiedBySalaAndSesion(salaId, sesionId);
   }
 }
+

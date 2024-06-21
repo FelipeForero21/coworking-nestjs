@@ -1,26 +1,41 @@
 import { Injectable } from '@nestjs/common';
-import { CreateSesioneDto } from './dto/create-sesione.dto';
-import { UpdateSesioneDto } from './dto/update-sesione.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Sesion } from './entities/sesione.entity';
 
 @Injectable()
 export class SesionesService {
-  create(createSesioneDto: CreateSesioneDto) {
-    return 'This action adds a new sesione';
+  constructor(
+    @InjectRepository(Sesion)
+    private readonly sesionRepository: Repository<Sesion>,
+  ) {}
+
+  async findAll(): Promise<Sesion[]> {
+    return this.sesionRepository.find();
   }
 
-  findAll() {
-    return `This action returns all sesiones`;
+  async findMostOccupied(): Promise<Sesion[]> {
+    return this.sesionRepository.createQueryBuilder('sesion')
+      .leftJoinAndSelect('sesion.espacio', 'espacio')
+      .leftJoinAndSelect('sesion.usuario', 'usuario')
+      .orderBy('COUNT(usuario.id)', 'DESC')
+      .groupBy('sesion.id')
+      .getMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} sesione`;
+  async findMostAvailable(): Promise<Sesion[]> {
+    return this.sesionRepository.createQueryBuilder('sesion')
+      .leftJoinAndSelect('sesion.espacio', 'espacio')
+      .leftJoinAndSelect('sesion.usuario', 'usuario')
+      .orderBy('COUNT(usuario.id)', 'ASC')
+      .groupBy('sesion.id')
+      .getMany();
   }
 
-  update(id: number, updateSesioneDto: UpdateSesioneDto) {
-    return `This action updates a #${id} sesione`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} sesione`;
+  async findAssignedEspacios(sesionId: number): Promise<Sesion> {
+    return this.sesionRepository.findOne({
+      where: { id: sesionId },
+      relations: ['espacio', 'usuario'],
+    });
   }
 }

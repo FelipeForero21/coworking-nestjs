@@ -1,34 +1,28 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { SesionesService } from './sesiones.service';
-import { CreateSesioneDto } from './dto/create-sesione.dto';
-import { UpdateSesioneDto } from './dto/update-sesione.dto';
+import { Sesion } from './entities/sesione.entity';
 
 @Controller('sesiones')
 export class SesionesController {
   constructor(private readonly sesionesService: SesionesService) {}
 
-  @Post()
-  create(@Body() createSesioneDto: CreateSesioneDto) {
-    return this.sesionesService.create(createSesioneDto);
-  }
-
   @Get()
-  findAll() {
+  findAll(): Promise<Sesion[]> {
     return this.sesionesService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.sesionesService.findOne(+id);
+  @Get('mas-ocupadas')
+  findMostOccupied(): Promise<Sesion[]> {
+    return this.sesionesService.findMostOccupied();
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSesioneDto: UpdateSesioneDto) {
-    return this.sesionesService.update(+id, updateSesioneDto);
+  @Get('mas-disponibles')
+  findMostAvailable(): Promise<Sesion[]> {
+    return this.sesionesService.findMostAvailable();
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.sesionesService.remove(+id);
+  @Get(':id/espacios')
+  findAssignedEspacios(@Param('id') id: number): Promise<Sesion> {
+    return this.sesionesService.findAssignedEspacios(id);
   }
 }
