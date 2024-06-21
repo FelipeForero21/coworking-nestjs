@@ -22,31 +22,37 @@ El proyecto está organizado en varios módulos, cada uno manejando un aspecto e
 
 Instalación
 
-    Clona el repositorio:
+Clona el repositorio:
 
-    sh
 
-git clone https://github.com/tu-usuario/coworking-api.git
+    git clone https://github.com/tu-usuario/coworking-api.git
+    
+
+    
+
+
 
 Navega al directorio del proyecto:
 
-sh
+    cd coworking-api
+    
 
-cd coworking-api
+    
+
+
 
 Instala las dependencias:
 
-sh
+
 
     npm install
 
-    Configura las variables de entorno en un archivo .env basado en el archivo .env.example.
+Configura las variables de entorno en un archivo .env basado en el archivo .env.example.
 
 Ejecución
 
 Para iniciar la aplicación en modo de desarrollo:
 
-sh
 
 npm run start:dev
 
