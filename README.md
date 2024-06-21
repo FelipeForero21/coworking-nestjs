@@ -59,4 +59,4 @@ npm run start:dev
 La API estará disponible en http://localhost:3000.
 Documentación de la API
 
-La documentación de la API está disponible en http://localhost:3000/api una vez que la aplicación esté en funcionamiento. Se utiliza Swagger para proporcionar una interfaz interactiva para explorar los endpoints de la API.
+La documentación de la API está disponible en http://localhost:3000/api una vez que la aplicación esté en funcionamiento. (Swagger)
