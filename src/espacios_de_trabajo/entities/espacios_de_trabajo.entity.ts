@@ -3,7 +3,7 @@ import { Sala } from "src/salas/entities/sala.entity";
 import { Sesion } from "src/sesiones/entities/sesione.entity";
 import { ReservaDeEspacio } from "src/reservas_de_espacios_de_trabajo/entities/reservas_de_espacios_de_trabajo.entity";
 
-@Entity({ schema: 'coworking', name: "espacios_de_trabajo" })
+@Entity({ schema: 'public', name: "espacios_de_trabajo" })
 export class Espacio {
     @PrimaryGeneratedColumn()
     id: number;

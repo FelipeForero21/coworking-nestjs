@@ -4,7 +4,7 @@ import { Usuario } from "src/usuarios/entities/usuario.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
-@Entity({ schema: 'coworking', name: "reservas_de_espacios_de_trabajo" })
+@Entity({ schema: 'public', name: "reservas_de_espacios_de_trabajo" })
 export class ReservaDeEspacio {
     @PrimaryGeneratedColumn()
     id: number;

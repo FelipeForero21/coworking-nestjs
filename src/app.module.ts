@@ -16,7 +16,7 @@ import { Sesion } from './sesiones/entities/sesione.entity';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.env'
+      envFilePath: '.env',
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -27,7 +27,7 @@ import { Sesion } from './sesiones/entities/sesione.entity';
       database: process.env.DATABASE,
       autoLoadEntities: true,
       entities: [Usuario, Espacio, Sala, ReservaDeEspacio, Sesion],
-      synchronize: false,
+      synchronize: true,
       extra: {
         ssl: true
       },

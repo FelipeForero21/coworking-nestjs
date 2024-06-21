@@ -5,7 +5,7 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "t
 
 
 
-@Entity({ schema: 'coworking', name: "sesiones" })
+@Entity({ schema: 'public', name: "sesiones" })
 export class Sesion {
     @PrimaryGeneratedColumn()
     id: number;

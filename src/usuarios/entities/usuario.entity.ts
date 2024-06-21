@@ -2,7 +2,7 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { ReservaDeEspacio } from "src/reservas_de_espacios_de_trabajo/entities/reservas_de_espacios_de_trabajo.entity";
 import { Sesion } from "src/sesiones/entities/sesione.entity";
 
-@Entity({ schema: 'coworking', name: "usuarios" })
+@Entity({ schema: 'public', name: "usuarios" })
 export class Usuario {
     @PrimaryGeneratedColumn()
     id: number;
