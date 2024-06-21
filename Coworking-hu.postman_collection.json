@@ -1,0 +1,83 @@
+{
+	"info": {
+		"_postman_id": "9ea61312-93fb-46da-a08c-59c8b1c866c2",
+		"name": "Coworking-hu",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "33509084",
+		"_collection_link": "https://blue-flare-210817.postman.co/workspace/My-Workspace~931d3d74-1254-45cc-8136-433563407235/collection/33509084-9ea61312-93fb-46da-a08c-59c8b1c866c2?action=share&source=collection_link&creator=33509084"
+	},
+	"item": [
+		{
+			"name": "Obtener todos los usuarios",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:3000/usuarios"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todas las salas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:3000/salas"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todos los espacios",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:3000/espacios"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener espacios disponibles por sala y sesión",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:3000/espacios/disponibles/{salaId}/{sesionId}"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener espacios ocupados por sala y sesión",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:3000/espacios/ocupados/{salaId}/{sesionId}"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todas las sesiones",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:3000/sesiones"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener las sesiones más ocupadas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:3000/sesiones/mas-ocupadas"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener las sesiones más disponibles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:3000/sesiones/mas-disponibles"
+			},
+			"response": []
+		}
+	]
+}
